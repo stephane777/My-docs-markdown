@@ -6,7 +6,7 @@ Webpack bundle all different files in a single structure inside a dist folder wi
 
 Folder structure
 
-```
+```properties
 root
 |__ dist
 |__ src
@@ -73,7 +73,7 @@ this option helps to see our code in the <roorDir>/dist/index.js
 
 css-loader and style-loader :
 
-```sh
+```properties
     npm install --save-dev css-loader style-loader
 ```
 
@@ -95,7 +95,7 @@ at this stage our app is not showing any styling. We need style-loader to create
 
 html-loader :
 
-```sh
+```properties
     npm install --save-dev html-loader
 ```
 
@@ -117,8 +117,8 @@ html-loader :
     }
 ```
 
-html-loader will check in the <roorDir>/src/index.html every img tag src and will require it in js
-<img src="./webpack.png" />
+html-loader will check in the `<roorDir> /src/index.html` every img tag src and will require it in js
+`<img src="./webpack.png" />`
 But we need to add file-loader so webpack can load the file
 
 file-loader: allow to import all the assets like images (svg, png, jpg, ...)
@@ -139,7 +139,7 @@ by checking the src attr of img tag
 
 #### 6. PLUGIN
 
-```sh
+```properties
     npm install --save-dev html-webpack-plugin
 ```
 
@@ -162,7 +162,7 @@ we will have it in <rootDir>/dist/index.html
 
 remove the <rootDir>/index.html and create a html template in <rootDir>/src/template.html
 
-```sh
+```properties
     npm install --save-dev clean-webpack-plugin
 ```
 
@@ -171,7 +171,7 @@ During the production build all file with a hash will be generated so the new di
 
 mini-css-extract-plugin:
 
-```sh
+```properties
     npm install --save-dev mini-css-extract-plugin
 ```
 
@@ -190,7 +190,7 @@ module.exports = {
 };
 ```
 
-```sh
+```properties
     npm install --save-dev optimize-css-assets-webpack-plugin
 ```
 

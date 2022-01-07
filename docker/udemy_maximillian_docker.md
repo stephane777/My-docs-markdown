@@ -18,9 +18,17 @@
 
 ### Pre-Build image
 
-`docker run node` // will download from dockerHub if not available locally
-`docker ps -a` // exit 0
-`docker run -it node` // execute node container and expose the shell to its host
+```docker
+docker run node #will download from dockerHub if not available locally
+```
+
+```docker
+docker ps -a # exit 0
+```
+
+```docker
+docker run -it node #execute node container and expose the shell to its host
+```
 
 > welcome to Node.js v14.17
 
@@ -28,26 +36,26 @@
 
 nota: an image contains the environment and the content file
 
-`FROM node` // hey I want to pull node image in my own image
+```docker
+FROM node # hey I want to pull node image in my own image
 
-`WORKDIR /app` // tell Docker that all the subsequent command will be executed inside the working directory /app
+WORKDIR /app # tell Docker that all the subsequent command will be executed inside the working directory /app
 
-`COPY . /app` // which file should go in that image ?
-// the first path right beside COPY is all the file at the same location where the Dockerfile is located ( Dockerfile excluded )
-// the second path is the location where all the files should be copied into the image. Since we have WORKDIR = /app the destination
-// can be changed form `COPY . /app` to `COPY . .` but we can leave `COPY . /app` as it's more clear.
+COPY . /app # which file should go in that image ?
+# the first path right beside COPY is all the file at the same location where the Dockerfile is located ( Dockerfile excluded )
+# the second path is the location where all the files should be copied into the image. Since we have WORKDIR = /app the destination
+# can be changed form `COPY . /app` to `COPY . .` but we can leave `COPY . /app` as it's more clear.
 
-`RUN npm install` // will create the node_modules inside /app
+RUN npm install # will create the node_modules inside /app
 
-`RUN node server.js` // would try to run the server in the image but that's not what we want
+RUN node server.js # would try to run the server in the image but that's not what we want
 
-`EXPOSE 80` // only for information purpose. the -p (publish) will do the job to expose the image port to its host.
+EXPOSE 80 # only for information purpose. the -p (publish) will do the job to expose the image port to its host.
 
-`CMD ["node","server.js"]` // we only want to run the image from the container
+CMD ["node","server.js"] # we only want to run the image from the container
 
-Finally we will have :
+# Finally we will have :
 
-```
   FROM node
   WORKDIR /app
   COPY . /APP
@@ -59,7 +67,10 @@ Finally we will have :
 ### Running a container based on our own image
 
 Command to build the container based on that image, the path to locate the file is from the path where the cmd is executed.
-```docker build .``` 
+
+```docker
+docker build .
+```
 
 ```
  => [2/4] WORKDIR /app                                                                                  0.2s
@@ -72,25 +83,30 @@ Command to build the container based on that image, the path to locate the file 
 
 Copy the id generated here it's : 57c7f4ca43cbb6ce63bb0cf5c30e643eb74f185d670ac56a691ce3b3eb92bce4
 
-`docker run 57c7f4ca43cbb6ce63bb0cf5c30e643eb74f185d670ac56a691ce3b3eb92bce4` // will start the container base on that image.
+```console
+docker run 57c7f4ca43cbb6ce63bb0cf5c30e643eb74f185d670ac56a691ce3b3eb92bce4 # will start the container base on that image.
+```
 
 At this stage it's not working yet.
 
-```
+```console
  scandelas in ~/Documents/github_repo/UDEMY/Docker_Max/first-demo-starting-setup  > docker ps
  CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS     NAMES
  962efe02773c   57c7f4ca43cb   "docker-entrypoint.s…"   44 seconds ago   Up 43 seconds   80/tcp    agitated_carson
  scandelas in ~/Documents/github_repo/UDEMY/Docker_Max/first-demo-starting-setup  > docker stop agitated_carson
-```
+
 
 scandelas in ~/Documents/github_repo/UDEMY/Docker_Max/first-demo-starting-setup > docker run -p 80:80 57c7f4ca43cb
+```
 
 ### Image are read-only
 
 Once build the docker images are ready only. If we need to make a change to our code we need to run
-```
+
+```properties
 docker build .
 ```
+
 again and it will create an new image with the new code.
 
 ### Understanding image layer
@@ -115,7 +131,7 @@ the cache with all the packages will already exist.
 
 ### Stopping and Restarting Containers
 
-```
+```do
   docker --help
   docker ps --help
   docker ps -a      // list all container running and stopped
