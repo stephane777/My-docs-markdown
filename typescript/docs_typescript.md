@@ -1,8 +1,30 @@
+# Table of content
+
+<!-- TOC start -->
+
+- [Typescript - Official documentation](#typescript-official-documentation)
+  - [The Handbook](#the-handbook)
+    - [The Basics](#the-basics)
+      - [Emitting with errors](#emitting-with-errors)
+      - [DOWNLEVELING](#downleveling)
+      - [STRICTNESS](#strictness)
+    - [Every day types](#every-day-types)
+    - [Narrowing](#narrowing)
+- [DEFINITIONS](#definitions)
+  <!-- TOC end -->
+  <!-- TOC --><a name="typescript-official-documentation"></a>
+
 # Typescript - Official documentation
+
+<!-- TOC --><a name="the-handbook"></a>
 
 ## The Handbook
 
+<!-- TOC --><a name="the-basics"></a>
+
 ### The Basics
+
+<!-- TOC --><a name="emitting-with-errors"></a>
 
 #### Emitting with errors
 
@@ -11,6 +33,8 @@ $ tsc --noEmitOnError hello.ts
 ```
 
 The `--noEmitOnError` won't emit or generate the output file, that means if typescript found an error a new version of hello.ts won't be created.
+
+<!-- TOC --><a name="downleveling"></a>
 
 #### DOWNLEVELING
 
@@ -25,6 +49,8 @@ By default TypeScript targets ES3, an extremely old version of ECMAScript. We co
 by using the `target` option. Running with `--target es2015` changes TypeScript to target ECMAScript 2015,
 meaning code should be able to run wherever <mark>ECMAScript 2015<mark> is supported.
 
+<!-- TOC --><a name="strictness"></a>
+
 #### STRICTNESS
 
 ```console
@@ -32,6 +58,8 @@ $ tsc --noImplicitAny hello.tsc
 ```
 
 When no type annotation are presend and typescript can't infer the type of a variable it will fallback to type any. If `--noImplicitAny` is ON typescript will throw an error.
+
+<!-- TOC --><a name="every-day-types"></a>
 
 ### Every day types
 
@@ -202,6 +230,8 @@ function liveDangerously(x?: number | null) {
 }
 ```
 
+<!-- TOC --><a name="narrowing"></a>
+
 ### Narrowing
 
 ```typescript
@@ -273,3 +303,58 @@ function logValue(x: Date | string) {
 	}
 }
 ```
+
+Using type predicates
+
+```typescript
+function isFish(pet: Fish | Bird): pet is Fish {
+	return (pet as Fish).swim !== undefined;
+}
+```
+
+`pet is Fish` is our type predicate in this example. A predicate takes the form `parameterName is Type`, where `parameterName` must be the name of a parameter from the current function signature.
+
+Discriminated unions
+
+```typescript
+interface Circle {
+  kind: "circle";
+  radius: number;
+}
+
+interface Square {
+  kind: "square";
+  sideLength: number;
+}
+
+type Shape = Circle | Square;
+
+function getArea(shape: Shape) {
+  switch (shape.kind) {
+    case "circle":
+      return Math.PI * shape.radius ** 2;
+
+(parameter) shape: Circle
+    case "square":
+      return shape.sideLength ** 2;
+
+(parameter) shape: Square
+  }
+}
+```
+
+The never type
+When narrowing, you can reduce the options of a union to a point where you have removed all possibilities and have nothing left. In those cases, TypeScript will use a `never` type to represent a state which shouldn’t exist.
+
+<!-- TOC --><a name="definitions"></a>
+
+# DEFINITIONS
+
+**a discriminant property** is a common property shared by 2 object
+type guard
+
+**type predicates**
+
+**non-null assertions**
+
+**assignments**
