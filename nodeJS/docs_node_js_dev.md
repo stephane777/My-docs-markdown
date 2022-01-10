@@ -28,22 +28,21 @@ By default the exit number is 0 which means success.
 To Exit a process correctly
 
 ```js
-const express = require('express')
+const express = require('express');
 
-const app = express()
+const app = express();
 
 app.get('/', (req, res) => {
-  res.send('Hi!')
-})
+	res.send('Hi!');
+});
 
-const server = app.listen(3000, () => console.log('Server ready'))
+const server = app.listen(3000, () => console.log('Server ready'));
 
 process.on('SIGTERM', () => {
-  server.close(() => {
-    console.log('Process terminated')
-  })
-})
-
+	server.close(() => {
+		console.log('Process terminated');
+	});
+});
 ```
 
 `SIGKILL` is the signal that tells a process to immediately terminate, and would ideally act like `process.exit()`.
@@ -114,23 +113,25 @@ process.argv.forEach((value, i) => {
 
 output:
 
-```js
-value: 0: /usr/local/bin/node // full path of the node cmd
-value: 1: /Users/steph08/Documents/Documents - Steph07's MacBook Pro/Nodejs/Nodejs and Expressjs - Full course 8h16 - Freecodecamp/Tutorial/process_test.js // full path of the cmd
-value: 2: Stephane
-value: 3: Lucie
-value: 4: Agata
+```console
+$ value: 0: /usr/local/bin/node // full path of the node cmd
+$ value: 1: /Users/steph08/Documents/Documents - Steph07 s MacBook Pro/Nodejs/Nodejs and Expressjs - Full course 8h16 - Freecodecamp/Tutorial/process_test.js // full path of the cmd
+$ value: 2: Stephane
+$ value: 3: Lucie
+$ value: 4: Agata
 ```
 
 ## The console module
 
 [console module documentation](https://nodejs.org/api/console.html)
 
-`console.log('\x1b[33m%s\x1b[0m', 'hi!')` will output `hi` with yellow color
+```js
+console.log('\x1b[33m%s\x1b[0m', 'hi!'); // will output `hi` with yellow color
+```
 
 The best convenient way to update the format of the output with console.log is by using [Chalk](https://github.com/chalk/chalk)
 
-## Accecpt an input from the command line
+## Accept an input from the command line
 
 This is possible with the help of the readline or inquirer module
 
@@ -185,23 +186,23 @@ const { car } = require('./car.js');
 
 npm package manager handle the install of dependencies, update and versionning.
 
-```sh
---save-dev // installs and adds the entry to the package.json file devDependencies
---no-save // installs but does not add the entry to the package.json file dependencies
---save-optional // installs and adds the entry to the package.json file optionalDependencies
---no-optional // will prevent optional dependencies from being installed
+```console
+$ --save-dev // installs and adds the entry to the package.json file devDependencies
+$ --no-save // installs but does not add the entry to the package.json file dependencies
+$ --save-optional // installs and adds the entry to the package.json file optionalDependencies
+$ --no-optional // will prevent optional dependencies from being installed
 ```
 
 Executable package are installed in `/node_modules/.bin/` folder.
 
-```sh
-> node_modules/.bin/cowthink haha
+```console
+$ node_modules/.bin/cowthink haha
 ```
 
 or
 
-```sh
-npx cowthink node.js rocks !
+```console
+$ npx cowthink node.js rocks !
 ```
 
 ## package.json file
@@ -229,7 +230,9 @@ so that a product is 100% reproducible in the same way even if packages are upda
 
 ## Find the installed version of an npm package
 
-`npm ls -a`
+```console
+$ npm ls -a`
+```
 
 ```sh
 -─┬ cowsay@1.5.0
@@ -252,7 +255,9 @@ so that a product is 100% reproducible in the same way even if packages are upda
 
 ### Find a spcecific package version
 
-`npm list get-stdin`
+```console
+$ npm list get-stdin`
+```
 
 ```
 └─┬ cowsay@1.5.0
@@ -261,15 +266,17 @@ so that a product is 100% reproducible in the same way even if packages are upda
 
 ### Get the latest version for a specific package
 
-`npm view cowsay version`
+```console
+$ npm view cowsay version`
+```
 
 ```
 1.5.0
 ```
 
-`npm view cowsay versions`
+```console
+$ npm view cowsay versions`
 
-```
 [
   '1.0.0', '1.0.1', '1.0.2',
   '1.0.3', '1.1.0', '1.1.1',
@@ -283,15 +290,17 @@ so that a product is 100% reproducible in the same way even if packages are upda
 
 ### update packages to a newer version
 
-`npm update`
+```console
+npm update
+```
 
 ### update packages to a major version
 
-```sh
-npm install -g npm-check-updates
-ncu -u
-npm update
-npm install
+```console
+$ npm install -g npm-check-updates
+$ ncu -u
+$ npm update
+$ npm install
 ```
 
 this will upgrade all the version hints in the package.json file, to dependencies and devDependencies, so npm can install the new major version.
@@ -320,7 +329,7 @@ Symbols that can be used in Semantic versioning
 - -: you accept a range of versions. Example: 2.1.0 - 2.6.2
 - ||: you combine sets. Example: < 2.1 || > 2.6
 
-## Local and Global package
+## Local and Global package
 
 In general, all packages should be installed locally.
 
@@ -342,7 +351,7 @@ You need to set the --production flag (npm install --production) to avoid instal
 
 `npx` can also run code hosted on GitHub gist:
 
-```sh
+```conso
 npx https://gist.github.com/zkat/4bc19503fe9e9309e2bfaa2c58074d32
 ```
 
@@ -359,20 +368,20 @@ Almost all the I/O primitives in JavaScript are non-blocking. Network requests, 
 The call stack is like a pile where function are executed and each instruction of a function is added on top of the call stack, once done it will be removed and the next instruction in the function is added at the top etc...
 
 ```js
-const bar = () => console.log('bar')
+const bar = () => console.log('bar');
 
-const baz = () => console.log('baz')
+const baz = () => console.log('baz');
 
 const foo = () => {
-  console.log('foo')
-  setTimeout(bar, 0)
-  new Promise((resolve, reject) =>
-    resolve('should be right after baz, before bar')
-  ).then(resolve => console.log(resolve))
-  baz()
-}
+	console.log('foo');
+	setTimeout(bar, 0);
+	new Promise((resolve, reject) =>
+		resolve('should be right after baz, before bar')
+	).then((resolve) => console.log(resolve));
+	baz();
+};
 
-foo()
+foo();
 ```
 
 ![image](https://nodejs.dev/static/4bb05f4d91852eb8c6b3de5371451315/f470a/call-stack-third-example.png 'call stack')
@@ -382,7 +391,6 @@ foo()
 [evnet module documentation](https://nodejs.org/api/events.html)
 
 ```js
-const EventEmitter = require('events')
-const eventEmitter = new EventEmitter()
-
+const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
 ```
