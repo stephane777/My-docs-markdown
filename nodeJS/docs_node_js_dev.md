@@ -101,7 +101,9 @@ In REPL if you type \_ you will get the last result of the last cmd executed.
 
 if we run this command
 
-`node app.js Stephane Lucie Agata`
+```console
+$ node app.js Stephane Lucie Agata
+```
 
 we can access the the arguments passed :
 
@@ -207,17 +209,25 @@ $ npx cowthink node.js rocks !
 
 ## package.json file
 
-```json
+```js
 {
-    "version": indicates the current version
-    "name": sets the application/package name
-    "description": is a brief description of the app/package
-    "main": sets the entry point for the application
-    "private": if set to true prevents the app/package to be accidentally published on npm
-    "scripts": defines a set of node scripts you can run
-    "dependencies": sets a list of npm packages installed as dependencies
-    "devDependencies": sets a list of npm packages installed as development dependencies
-    "engines": sets which versions of Node.js this package/app works on
+    "version":"1.0.0" // indicates the current version,
+    "name":"project" // sets the application/package name,
+    "description": "a test project"  //is a brief description of the app/package,
+    "main":"index.js" //sets the entry point for the application;
+    "private": "true" //if set to true prevents the app/package to be accidentally published on npm;
+    "scripts": {
+      "start":"npm run dev",  // defines a set of node scripts you can run;
+    }
+    "dependencies": {
+    "express": "^4.17.1" // sets a list of npm packages installed as dependencies
+  },
+    "devDependencies": {
+    "nodemon": "^2.0.7", //sets a list of npm packages installed as development dependencies
+  }
+    "engines": {  //sets which versions of Node.js this package/app works on
+    "node": ">=0.10.3 <15"
+  }
     "browserslist": is used to tell which browsers (and their versions) you want to support
 
 }
