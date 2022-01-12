@@ -247,7 +247,7 @@ function padLeft(padding: number | string, input: string) {
 }
 ```
 
-Equality narrowing
+#### Equality narrowing
 
 `x ===y` this condition will filter out number for x and boolean for y, meaning that the block code
 will only be executed if both x and y are of type string
@@ -345,6 +345,96 @@ function getArea(shape: Shape) {
 
 The never type
 When narrowing, you can reduce the options of a union to a point where you have removed all possibilities and have nothing left. In those cases, TypeScript will use a `never` type to represent a state which shouldn’t exist.
+
+### More on Functions
+
+#### Function Type Expression
+
+```typescript
+function greeter(callback: (a: string) => void) {
+	callback('Stephane');
+}
+
+function printToConsole(text: string) {
+	console.log(text);
+}
+greeter(printToConsole);
+
+// or
+
+type PrintToConsoleType = (text: string) => void;
+function greeter(callback: PrintToConsoleType) {
+	// ...
+}
+```
+
+#### Call signatures: function callable with property
+
+```typescript
+type DescribableFunction = {
+	description: string;
+	(someArg: number): boolean;
+};
+function doSomething(fn: DescribableFunction) {
+	console.log(fn.description + ' returned ' + fn(6));
+}
+```
+
+#### Construct Signatures
+
+```typescript
+type SomeConstructor = {
+	new (s: string): SomeObject;
+};
+function fn(ctor: SomeConstructor) {
+	return new ctor('hello');
+}
+```
+
+#### Generic Functions
+
+In TypeScript, generics are used when we want to describe a correspondence between two values. We do this by declaring a type parameter in the function signature:
+
+```typescript
+function firstElement<Type>(arr: Type[]): Type | undefined {
+	return arr[0];
+}
+```
+
+#### Inference
+
+```typescript
+function map<Input, Output>(
+	arr: Input[],
+	func: (arg: Input) => Output
+): Output[] {
+	return arr.map(func);
+}
+
+// Parameter 'n' is of type 'string'
+// 'parsed' is of type 'number[]'
+const parsed = map(['1', '2', '3'], (n) => parseInt(n));
+```
+
+#### Constraints
+
+```typescript
+function longest<Type extends { length: number }>(a: Type, b: Type) {
+	if (a.length >= b.length) {
+		return a;
+	} else {
+		return b;
+	}
+}
+
+// longerArray is of type 'number[]'
+const longerArray = longest([1, 2], [1, 2, 3]);
+// longerString is of type 'alice' | 'bob'
+const longerString = longest('alice', 'bob');
+// Error! Numbers don't have a 'length' property
+const notOK = longest(10, 100);
+// Argument of type 'number' is not assignable to parameter of type '{ length: number; }'.
+```
 
 <!-- TOC --><a name="definitions"></a>
 
