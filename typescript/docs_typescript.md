@@ -436,6 +436,51 @@ const notOK = longest(10, 100);
 // Argument of type 'number' is not assignable to parameter of type '{ length: number; }'.
 ```
 
+#### Specifying Type Arguments
+
+```typescript
+function combine<Type>(arr1: Type[], arr2: Type[]): Type[] {
+	return arr1.concat(arr2);
+}
+// or if you need more specific type
+const arr = combine<string | number>([1, 2, 3], ['hello']);
+```
+
+#### Guidelines for Writing Good Generice Functions
+
+```javascript
+function firstElement1<Type>(arr: Type[]) {
+  return arr[0];
+}
+
+function firstElement2<Type extends any[]>(arr: Type) {
+  return arr[0];
+}
+
+// a: number (good)
+const a = firstElement1([1, 2, 3]);
+// b: any (bad)
+const b = firstElement2([1, 2, 3]);
+```
+
+#### Optional parameter
+
+```typescript
+function f(x?: number) {
+	// ...
+}
+f(); // OK
+f(10); // OK
+```
+
+Although the parameter is specified as type number, the x parameter will actually have the type `number | undefined` because unspecified parameters in JavaScript get the value undefined.
+
+#### Function Overloads
+
+```typescript
+
+```
+
 <!-- TOC --><a name="definitions"></a>
 
 # DEFINITIONS
