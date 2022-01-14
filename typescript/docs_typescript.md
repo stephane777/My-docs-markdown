@@ -1,30 +1,8 @@
-# Table of content
-
-<!-- TOC start -->
-
-- [Typescript - Official documentation](#typescript-official-documentation)
-  - [The Handbook](#the-handbook)
-    - [The Basics](#the-basics)
-      - [Emitting with errors](#emitting-with-errors)
-      - [DOWNLEVELING](#downleveling)
-      - [STRICTNESS](#strictness)
-    - [Every day types](#every-day-types)
-    - [Narrowing](#narrowing)
-- [DEFINITIONS](#definitions)
-  <!-- TOC end -->
-  <!-- TOC --><a name="typescript-official-documentation"></a>
-
 # Typescript - Official documentation
-
-<!-- TOC --><a name="the-handbook"></a>
 
 ## The Handbook
 
-<!-- TOC --><a name="the-basics"></a>
-
 ### The Basics
-
-<!-- TOC --><a name="emitting-with-errors"></a>
 
 #### Emitting with errors
 
@@ -33,8 +11,6 @@ $ tsc --noEmitOnError hello.ts
 ```
 
 The `--noEmitOnError` won't emit or generate the output file, that means if typescript found an error a new version of hello.ts won't be created.
-
-<!-- TOC --><a name="downleveling"></a>
 
 #### DOWNLEVELING
 
@@ -49,8 +25,6 @@ By default TypeScript targets ES3, an extremely old version of ECMAScript. We co
 by using the `target` option. Running with `--target es2015` changes TypeScript to target ECMAScript 2015,
 meaning code should be able to run wherever <mark>ECMAScript 2015<mark> is supported.
 
-<!-- TOC --><a name="strictness"></a>
-
 #### STRICTNESS
 
 ```console
@@ -58,8 +32,6 @@ $ tsc --noImplicitAny hello.tsc
 ```
 
 When no type annotation are presend and typescript can't infer the type of a variable it will fallback to type any. If `--noImplicitAny` is ON typescript will throw an error.
-
-<!-- TOC --><a name="every-day-types"></a>
 
 ### Every day types
 
@@ -229,8 +201,6 @@ function liveDangerously(x?: number | null) {
 	console.log(x!.toFixed());
 }
 ```
-
-<!-- TOC --><a name="narrowing"></a>
 
 ### Narrowing
 
@@ -478,10 +448,20 @@ Although the parameter is specified as type number, the x parameter will actuall
 #### Function Overloads
 
 ```typescript
-
+function makeDate(timestamp: number): Date; // <= function overload
+function makeDate(m: number, d: number, y: number): Date; // function overload
+function makeDate(mOrTimestamp: number, d?: number, y?: number): Date {
+	// function with implementation signatures
+	if (d !== undefined && y !== undefined) {
+		return new Date(y, mOrTimestamp, d);
+	} else {
+		return new Date(mOrTimestamp);
+	}
+}
+const d1 = makeDate(12345678);
+const d2 = makeDate(5, 5, 5);
+const d3 = makeDate(1, 3);
 ```
-
-<!-- TOC --><a name="definitions"></a>
 
 # DEFINITIONS
 
