@@ -463,7 +463,68 @@ const d2 = makeDate(5, 5, 5);
 const d3 = makeDate(1, 3);
 ```
 
+#### Unknown
+
+```typescript
+function f1(a: any) {
+  a.b(); // OK
+}
+function f2(a: unknown) {
+  a.b();
+Object is of type 'unknown'.
+}
+```
+
+#### never
+
+```typescript
+function fail(msg: string): never {
+	throw new Error(msg);
+}
+// The never type represents values which are never observed. In a return type, this means that the
+// function throws an exception or terminates execution of the program.
+// never also appears when TypeScript determines there’s nothing left in a union.
+
+function fn(x: string | number) {
+	if (typeof x === 'string') {
+		// do something
+	} else if (typeof x === 'number') {
+		// do something else
+	} else {
+		x; // has type 'never'!
+	}
+}
+```
+
+#### Rest parameters
+
+```typescript
+function multiply(n: number, ...m: number[]) {
+	return m.map((x) => n * x);
+}
+// 'a' gets value [10, 20, 30, 40]
+const a = multiply(10, 1, 2, 3, 4);
+```
+
+#### Parameter Destructuring
+
+```typescript
+function sum({ a, b, c }: { a: number; b: number; c: number }) {
+	console.log(a + b + c);
+}
+// The type annotation for the object goes after the destructuring synthax
+
+type ABC = { a: number; b: number; c: number };
+function sum({ a, b, c }: ABC) {
+	console.log(a + b + c);
+}
+```
+
 # DEFINITIONS
+
+**a named type** synthax is `type ABC = { a: number; b: number; c: number };`
+
+**a literal function definition** is `function f1():void { return true}`
 
 **a discriminant property** is a common property shared by 2 object
 type guard
