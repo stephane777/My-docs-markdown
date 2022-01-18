@@ -97,6 +97,19 @@ process.constructor
 
 In REPL if you type \_ you will get the last result of the last cmd executed.
 
+```js
+> 2+2
+4
+> _+2
+6
+```
+
+to exit the REPL type :
+
+```node
+.exit
+```
+
 ## Arguments from the CLI.
 
 if we run this command
